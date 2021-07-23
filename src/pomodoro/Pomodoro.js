@@ -4,6 +4,7 @@ import { minutesToDuration, secondsToDuration } from "../utils/duration";
 import ProgressBar from "./ProgressBar";
 import TimeControl from "./TimeControl";
 import Play from "./Play";
+import Stop from "./Stop";
 
 // These functions are defined outside of the component to insure they do not have access to state
 // and are, therefore more likely to be pure.
@@ -100,6 +101,7 @@ function Pomodoro() {
   }
 
   const handleStop = () => {
+    // resets timer to inital state
     if (session) {
       setIsTimerRunning(false);
       setSession(null);
@@ -169,17 +171,7 @@ function Pomodoro() {
             aria-label="Timer controls"
           >
             <Play playPause={playPause} isTimerRunning={isTimerRunning} />
-
-            <button
-              type="button"
-              className="btn btn-secondary"
-              data-testid="stop"
-              title="Stop the session"
-              onClick={handleStop}
-              disabled={!isTimerRunning}
-            >
-              <span className="oi oi-media-stop" />
-            </button>
+            <Stop handleStop={handleStop} isTimerRunning={isTimerRunning} />
           </div>
         </div>
       </div>
