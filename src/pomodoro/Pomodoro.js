@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import classNames from "../utils/class-names";
 import useInterval from "../utils/useInterval";
 import { minutesToDuration, secondsToDuration } from "../utils/duration";
 import ProgressBar from "./ProgressBar";
 import TimeControl from "./TimeControl";
+import Play from "./Play";
 
 // These functions are defined outside of the component to insure they do not have access to state
 // and are, therefore more likely to be pure.
@@ -135,7 +135,6 @@ function Pomodoro() {
         <div className="col">
           <div className="input-group input-group-lg mb-2">
             <span className="input-group-text" data-testid="duration-focus">
-              {/* TODO: Update this text to display the current focus session duration */}
               Focus Duration: {minutesToDuration(focusDuration)}
             </span>
             <TimeControl
@@ -150,7 +149,6 @@ function Pomodoro() {
           <div className="float-right">
             <div className="input-group input-group-lg mb-2">
               <span className="input-group-text" data-testid="duration-break">
-                {/* TODO: Update this text to display the current break session duration */}
                 Break Duration: {minutesToDuration(breakDuration)}
               </span>
               <TimeControl
@@ -170,23 +168,8 @@ function Pomodoro() {
             role="group"
             aria-label="Timer controls"
           >
-            <button
-              type="button"
-              className="btn btn-primary"
-              data-testid="play-pause"
-              title="Start or pause timer"
-              onClick={playPause}
-            >
-              <span
-                className={classNames({
-                  oi: true,
-                  "oi-media-play": !isTimerRunning,
-                  "oi-media-pause": isTimerRunning,
-                })}
-              />
-            </button>
-            {/* TODO: Implement stopping the current focus or break session. and disable the stop button when there is no active session */}
-            {/* TODO: Disable the stop button when there is no active session */}
+            <Play playPause={playPause} isTimerRunning={isTimerRunning} />
+
             <button
               type="button"
               className="btn btn-secondary"
@@ -203,10 +186,8 @@ function Pomodoro() {
       {/* Displays only when there is a session*/}
       {session && (
         <div>
-          {/* TODO: This area should show only when there is an active focus or break - i.e. the session is running or is paused */}
           <div className="row mb-2">
             <div className="col">
-              {/* TODO: Update message below to include current session (Focusing or On Break) total duration */}
               <h2 data-testid="session-title">
                 {session?.label} for{" "}
                 {session?.label === "Focusing"
@@ -214,7 +195,6 @@ function Pomodoro() {
                   : minutesToDuration(breakDuration)}{" "}
                 minutes
               </h2>
-              {/* TODO: Update message below correctly format the time remaining in the current session */}
               <p className="lead" data-testid="session-sub-title">
                 {secondsToDuration(session?.timeRemaining)} remaining
               </p>
