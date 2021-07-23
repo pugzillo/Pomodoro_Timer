@@ -70,7 +70,7 @@ function Pomodoro() {
   useInterval(
     () => {
       if (session.timeRemaining === 0) {
-        // new Audio("https://bigsoundbank.com/UPLOAD/mp3/1482.mp3").play();
+        new Audio("https://bigsoundbank.com/UPLOAD/mp3/1482.mp3").play();
         return setSession(nextSession(focusDuration, breakDuration));
       }
       return setSession(nextTick);
@@ -124,7 +124,7 @@ function Pomodoro() {
 
   const handleBreakIncrease = () => {
     setBreakDuration((currentDuration) => Math.min(15, currentDuration + 1));
-  };
+  }; 
 
   const percentTime =
     (1 -
