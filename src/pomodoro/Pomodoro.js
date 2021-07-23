@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import useInterval from "../utils/useInterval";
-import { minutesToDuration, secondsToDuration } from "../utils/duration";
+import { minutesToDuration } from "../utils/duration";
 import ProgressBar from "./ProgressBar";
 import TimeControl from "./TimeControl";
 import Play from "./Play";
 import Stop from "./Stop";
+import SessionTitles from "./SessionTitles";
 
 // These functions are defined outside of the component to insure they do not have access to state
 // and are, therefore more likely to be pure.
@@ -108,6 +109,7 @@ function Pomodoro() {
     }
   };
 
+  // Click handlers for time control
   const handleFocusDecrease = () => {
     setFocusDuration((currentDuration) => Math.max(5, currentDuration - 5));
   };
@@ -125,10 +127,11 @@ function Pomodoro() {
   };
 
   const percentTime =
-    (session?.timeRemaining /
-      (session?.label === "Focusing"
-        ? focusDuration * 60
-        : breakDuration * 60)) *
+    (1 -
+      session?.timeRemaining /
+        (session?.label === "Focusing"
+          ? focusDuration * 60
+          : breakDuration * 60)) *
     100;
 
   return (
@@ -179,18 +182,11 @@ function Pomodoro() {
       {session && (
         <div>
           <div className="row mb-2">
-            <div className="col">
-              <h2 data-testid="session-title">
-                {session?.label} for{" "}
-                {session?.label === "Focusing"
-                  ? minutesToDuration(focusDuration)
-                  : minutesToDuration(breakDuration)}{" "}
-                minutes
-              </h2>
-              <p className="lead" data-testid="session-sub-title">
-                {secondsToDuration(session?.timeRemaining)} remaining
-              </p>
-            </div>
+            <SessionTitles
+              session={session}
+              focusDuration={focusDuration}
+              breakDuration={breakDuration}
+            />
           </div>
           <div className="row mb-2">
             <div className="col">
