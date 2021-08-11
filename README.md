@@ -1,4 +1,4 @@
-# Pomodoro Timer Project for Thinkful
+# Pomodoro Timer Project
 
 Uses react statement and rendering to develop a pomodoro that allows users change the focus and break increments.
 
